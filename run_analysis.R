@@ -185,9 +185,15 @@ make_plot <- function(df,val,region,file) {
     if(grepl(val,"Acceptance")) {
         p <- qplot(MX, MY, data = df, color = Acceptance*100)
         title <- "Acceptance [%]"
+        p <- p + geom_text(aes(label=round(Acceptance*100,2)), vjust = -1)
+        p <- p + scale_colour_gradientn(colours = c('orange','red','black'),
+                                        limits = c(0,1))
     } else if (grepl(val,"Reco. Eff.")) {
         p <- qplot(MX, MY, data = df, color = YIELD/NormEvents*100)
         title <- "Reco. Eff. [%]"
+        p <- p + geom_text(aes(label=round(YIELD/NormEvents*100,0)), vjust = -1)
+        p <- p + scale_colour_gradientn(colours = c('orange','red','black'),
+                                        limits = c(0,100))
     }
     p <- p + geom_point(size=5)
     p <- p + labs(title = paste(title,"for",region),
@@ -197,8 +203,7 @@ make_plot <- function(df,val,region,file) {
     p <- p + theme(plot.title = element_text(hjust = 0.5,size=14,face="bold"),
                    axis.title = element_text(size=14,face="bold"),
                    axis.text  = element_text(size=14,face="bold"))
-    p <- p + scale_colour_gradientn(colours=c('yellow','red','black'))
-    png(file, width=640, height=480, units = "px", type="quartz")
+    pdf(file, width = 10, height = 7)
     print(p)
     dev.off()
 }
@@ -237,8 +242,8 @@ if(make.plots) {
     # Write
     # write.fwf(my.df.SR3BodyWSF,file = 'SR3BodyWSF_Summary.txt')
     # Acceptance
-    make_plot(my.df.SR3BodyWSF,"Acceptance","SR3BodyWSF","Plots/SR3BodyWSF_Acc.png")
-    make_plot(my.df.SR3BodyWSF,"Reco. Eff.","SR3BodyWSF","Plots/SR3BodyWSF_RecoEff.png")
+    make_plot(my.df.SR3BodyWSF,"Acceptance","SR3BodyWSF","Plots/SR3BodyWSF_Acc.pdf")
+    make_plot(my.df.SR3BodyWSF,"Reco. Eff.","SR3BodyWSF","Plots/SR3BodyWSF_RecoEff.pdf")
 
     ###########
     # SR3BodyWDF
@@ -254,8 +259,8 @@ if(make.plots) {
     # Write
     # write.fwf(my.df.SR3BodyWDF,file = 'SR3BodyWDF_Summary.txt')
     # Acceptance
-    make_plot(my.df.SR3BodyWDF,"Acceptance","SR3BodyWDF","Plots/SR3BodyWDF_Acc.png")
-    make_plot(my.df.SR3BodyWDF,"Reco. Eff.","SR3BodyWDF","Plots/SR3BodyWDF_RecoEff.png")
+    make_plot(my.df.SR3BodyWDF,"Acceptance","SR3BodyWDF","Plots/SR3BodyWDF_Acc.pdf")
+    make_plot(my.df.SR3BodyWDF,"Reco. Eff.","SR3BodyWDF","Plots/SR3BodyWDF_RecoEff.pdf")
 
     ###########
     # SR3BodyTSF
@@ -271,8 +276,8 @@ if(make.plots) {
     # Write
     # write.fwf(my.df.SR3BodyTSF,file = 'SR3BodyTSF_Summary.txt')
     # Acceptance
-    make_plot(my.df.SR3BodyTSF,"Acceptance","SR3BodyTSF","Plots/SR3BodyTSF_Acc.png")
-    make_plot(my.df.SR3BodyTSF,"Reco. Eff.","SR3BodyTSF","Plots/SR3BodyTSF_RecoEff.png")
+    make_plot(my.df.SR3BodyTSF,"Acceptance","SR3BodyTSF","Plots/SR3BodyTSF_Acc.pdf")
+    make_plot(my.df.SR3BodyTSF,"Reco. Eff.","SR3BodyTSF","Plots/SR3BodyTSF_RecoEff.pdf")
 
     ###########
     # SR3BodyTDF
@@ -288,7 +293,7 @@ if(make.plots) {
     # Write
     # write.fwf(my.df.SR3BodyTDF,file = 'SR3BodyTDF_Summary.txt')    
     # Acceptance
-    make_plot(my.df.SR3BodyTDF,"Acceptance","SR3BodyTDF","Plots/SR3BodyTDF_Acc.png")
-    make_plot(my.df.SR3BodyTDF,"Reco. Eff.","SR3BodyTDF","Plots/SR3BodyTDF_RecoEff.png")
+    make_plot(my.df.SR3BodyTDF,"Acceptance","SR3BodyTDF","Plots/SR3BodyTDF_Acc.pdf")
+    make_plot(my.df.SR3BodyTDF,"Reco. Eff.","SR3BodyTDF","Plots/SR3BodyTDF_RecoEff.pdf")
     
 }
